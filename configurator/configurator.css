@@ -30,6 +30,8 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 .logo { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; cursor: default; }
 .tag { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+.tag a { color: var(--text); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+.tag a:hover { text-decoration-color: var(--text); }
 .top-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .preset { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; }
 

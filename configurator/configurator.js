@@ -5,7 +5,7 @@
 
   const { h, builders, randomColor, snap } = UI;
   const DEF = TextTantrum.defaults;
-  const SCRIPT_SRC = 'https://cdn.jsdelivr.net/gh/blue-grid/text-tantrum@0.1.0/text-tantrum.min.js';   // bump the version with each release
+  const SCRIPT_SRC = 'https://cdn.jsdelivr.net/gh/blue-grid/text-tantrum@0.1.1/text-tantrum.min.js';   // bump the version with each release
   const STORE_KEY = 'text-tantrum-config-v1';
 
   const FONTS = {
@@ -286,7 +286,9 @@
     const body = src.slice(0, start) + lines.join('\n') + src.slice(end);
     return `/*!\n * Text Tantrum v${TextTantrum.version}, set up with the Text Tantrum configurator.\n` +
       ` * Your settings are in DEFAULTS below. Every option has a comment: change anything you like.\n` +
-      ` * The last lines start it on your page.\n * No dependencies. MIT License. Copyright (c) 2026 Omid Akbari\n */\n` +
+      ` * The last lines start it on your page.\n * No dependencies. MIT License. Copyright (c) 2026 Omid Akbari\n *\n` +
+      ` * Made by Omid Akbari, senior product designer and creative technologist based in Düsseldorf, Germany.\n` +
+      ` * https://omid-akbari.com\n * Configurator and source: https://github.com/blue-grid/text-tantrum\n */\n` +
       `(function (root, factory) {\n  var lib = factory();\n  lib.factorySource = String(factory);\n` +
       `  if (typeof module === 'object' && module.exports) module.exports = lib;\n  else root.TextTantrum = lib;\n` +
       `})(typeof self !== 'undefined' ? self : this, ${body});\n\n` +

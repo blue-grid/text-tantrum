@@ -1,8 +1,12 @@
 /*!
- * Text Tantrum v0.1.0
+ * Text Tantrum v0.1.1
  * Letters that throw a little fit when you poke them: they turn into random signs
  * in loud colours for a moment, spit sparks, and snap back.
  * No dependencies. MIT License. Copyright (c) 2026 Omid Akbari
+ *
+ * Made by Omid Akbari, senior product designer and creative technologist based in Düsseldorf, Germany.
+ * https://omid-akbari.com
+ * Configurator and source: https://github.com/blue-grid/text-tantrum
  */
 (function (root, factory) {
   var lib = factory();
@@ -12,7 +16,7 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
-  var VERSION = '0.1.0';
+  var VERSION = '0.1.1';
 
   /* Every option, with the values that make the original effect. Ranges are [min, max]; a random value
      between the two is picked each time. Times are in ms unless the name says otherwise. */
