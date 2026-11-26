@@ -24,7 +24,7 @@
     ['Arrows', '←↑→↓↖↗↘↙'], ['Math', '∑∏∫√∞≈≠±÷×∂∆'], ['Shapes', '●○◆◇■□▲△★☆'], ['Hearts', '♥♡❤'], ['Emoji', '🔥💥✨⚡😵🤯👀']
   ];
 
-  const LOOK0 = { text: 'Poke me. I dare you.\nEvery letter here has feelings.', font: 'helvetica', size: 72, weight: 200, spacing: -0.03, color: '#ffffff', bg: '#07080a', align: 'left' };
+  const LOOK0 = { text: 'Say hello to your letters.\nEach one has a little mood.', font: 'helvetica', size: 72, weight: 200, spacing: -0.03, color: '#ffffff', bg: '#07080a', align: 'left' };
 
   /* ---------- state ---------- */
   const fresh = () => ({ look: { ...LOOK0 }, sparkSame: false, opts: TextTantrum.merge(DEF, {}) });
