@@ -36,7 +36,7 @@ window.PRESETS = {
       chars: '▲△^*~°•',
       colors: ['#ff3b00', '#ff8a00', '#ffd000', '#fff3b0'],
       rgbSplit: 0.04, splitColors: ['#ff2200', '#ffb000', '#ff6a00'],
-      sparks: { count: 20, gravity: -620, speed: [40, 260], follow: [100, 400], life: [0.5, 1.2], size: [1.5, 3.5], drag: 2, glow: 8, shrink: true }
+      sparks: { count: 12, gravity: -620, speed: [40, 260], follow: [100, 400], life: [0.5, 1.2], size: [1.5, 3.5], drag: 2, glow: 10, shrink: true, max: 900 }
     }
   },
   terminal: {

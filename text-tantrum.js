@@ -1,5 +1,5 @@
 /*!
- * Text Tantrum v1.0.0
+ * Text Tantrum v1.0.1
  * Letters that throw a little fit when you poke them: they turn into random signs
  * in loud colours for a moment, spit sparks, and snap back.
  * No dependencies. MIT License. Copyright (c) 2026 Omid Akbari
@@ -16,7 +16,7 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
-  var VERSION = '1.0.0';
+  var VERSION = '1.0.1';
 
   /* Every option, with the values that make the original effect. Ranges are [min, max]; a random value
      between the two is picked each time. Times are in ms unless the name says otherwise. */
@@ -58,7 +58,7 @@
       scatter: 0.18,            // how far from the pointer they start, in em
       fade: 1.4,                // how they fade out: 1 even, higher fades sooner
       opacity: 0.9,
-      glow: 0,                  // soft halo in px (costs speed with many sparks)
+      glow: 0,                  // soft halo around each spark, in px
       shrink: false,            // get smaller as they fade
       max: 1500,                // most sparks on screen at once
       zIndex: 2147483000
@@ -226,17 +226,41 @@
       var q = Math.exp(-dt * s.drag);
       p.vx *= q; p.vy *= q; p.vy += s.gravity * dt;
       p.x += p.vx * dt; p.y += p.vy * dt;
-      var k = 1 - p.life / p.max, r = p.sz * (s.shrink ? 0.25 + 0.75 * k : 1);
+      var k = 1 - p.life / p.max, r = p.sz * (s.shrink ? 0.25 + 0.75 * k : 1), a = Math.pow(k, s.fade) * s.opacity;
       ctx.globalCompositeOperation = s.blend === 'add' ? 'lighter' : 'source-over';
-      ctx.globalAlpha = Math.pow(k, s.fade) * s.opacity;
-      ctx.fillStyle = ctx.strokeStyle = ctx.shadowColor = p.c;
-      ctx.shadowBlur = s.glow;
+      if (s.glow > 0) {                          // the halo: a ready-made soft disc, stamped behind the spark
+        var d = r + s.glow * 2;
+        ctx.globalAlpha = a * 0.55;
+        ctx.drawImage(glowSprite(p.c), p.x - d / 2, p.y - d / 2, d, d);
+      }
+      ctx.globalAlpha = a;
+      ctx.fillStyle = ctx.strokeStyle = p.c;
       drawShape(s.shape, p, r);
       parts[n++] = p;
     }
     parts.length = n;
     ctx.globalAlpha = 1;
-    ctx.shadowBlur = 0;
+  }
+
+  /* One soft disc per colour, drawn once and reused. The canvas's own shadowBlur would do the same
+     but costs so much per spark that a fast stroke with glow on could freeze the page. */
+  var glows = {}, glowCount = 0;
+  function glowSprite(c) {
+    if (glows[c]) return glows[c];
+    if (glowCount > 64) { glows = {}; glowCount = 0; }
+    var g = document.createElement('canvas'), x = g.getContext('2d');
+    g.width = g.height = 64;
+    var gr = x.createRadialGradient(32, 32, 0, 32, 32, 32);
+    gr.addColorStop(0, 'rgba(255,255,255,1)');
+    gr.addColorStop(0.3, 'rgba(255,255,255,.5)');
+    gr.addColorStop(1, 'rgba(255,255,255,0)');
+    x.fillStyle = gr;
+    x.fillRect(0, 0, 64, 64);
+    x.globalCompositeOperation = 'source-in';   // tint the white disc, so its edge fades to the colour, not to grey
+    x.fillStyle = c;
+    x.fillRect(0, 0, 64, 64);
+    glowCount++;
+    return (glows[c] = g);
   }
 
   function drawShape(shape, p, r) {
