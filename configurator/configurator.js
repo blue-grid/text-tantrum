@@ -5,7 +5,7 @@
 
   const { h, builders, randomColor, snap } = UI;
   const DEF = TextTantrum.defaults;
-  const SCRIPT_SRC = 'https://cdn.jsdelivr.net/gh/blue-grid/text-tantrum@1.0.1/text-tantrum.min.js';   // bump the version with each release
+  const SCRIPT_SRC = 'https://cdn.jsdelivr.net/gh/blue-grid/text-tantrum@1.0.2/text-tantrum.min.js';   // bump the version with each release
   const STORE_KEY = 'text-tantrum-config-v1';
 
   const FONTS = {
@@ -161,7 +161,6 @@
       none: state.opts.auto ? 'It goes off by itself' : 'Nothing starts it here. Use “Poke it all”, or call burst() from your code' }[state.opts.trigger];
   }
 
-  let saveT = 0;
   function change(c, v) {
     setPath(c.key, v);
     styleTarget();
@@ -170,12 +169,10 @@
     controls.forEach(x => { if (x.c.when) x.el.hidden = !x.c.when(); });
     if (c.key === 'sparkSame' || c.key === 'opts.rgbSplit') refreshAll();
     updateHint();
-    clearTimeout(saveT);
-    saveT = setTimeout(save, 300);
   }
 
   function applyAll(reveal) {
-    styleTarget(); rebuild(); refreshAll(); updateHint(); save();
+    styleTarget(); rebuild(); refreshAll(); updateHint();
     if (reveal) inst.burst(500, 8);
   }
 
@@ -363,14 +360,14 @@
     clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 1600);
   }
 
-  /* ---------- saving ---------- */
-  function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch (e) { /* private mode */ } }
+  /* ---------- loading ---------- */
+  /* A reload always starts from the defaults; only a shared link (#…) brings settings back. Settings used to be kept
+     in the browser, but then a setting that froze the page came back on every reload, so nothing could reset it. */
   function load() {
-    let raw = null;
+    try { localStorage.removeItem(STORE_KEY); } catch (e) { /* private mode */ }
     try {
-      if (location.hash.length > 1) raw = decodeURIComponent(escape(atob(decodeURIComponent(location.hash.slice(1)))));
-      else raw = localStorage.getItem(STORE_KEY);
-      if (!raw) return null;
+      if (location.hash.length < 2) return null;
+      const raw = decodeURIComponent(escape(atob(decodeURIComponent(location.hash.slice(1)))));
       const s = JSON.parse(raw);
       const look = { ...LOOK0, ...s.look };
       if (OLD_TEXTS.includes(look.text)) look.text = LOOK0.text;      // an earlier default, not something the visitor wrote

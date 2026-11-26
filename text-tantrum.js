@@ -1,5 +1,5 @@
 /*!
- * Text Tantrum v1.0.1
+ * Text Tantrum v1.0.2
  * Letters that throw a little fit when you poke them: they turn into random signs
  * in loud colours for a moment, spit sparks, and snap back.
  * No dependencies. MIT License. Copyright (c) 2026 Omid Akbari
@@ -16,7 +16,7 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
-  var VERSION = '1.0.1';
+  var VERSION = '1.0.2';
 
   /* Every option, with the values that make the original effect. Ranges are [min, max]; a random value
      between the two is picked each time. Times are in ms unless the name says otherwise. */
@@ -76,6 +76,7 @@
     '.tt-sr{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}';
 
   var instances = [], active = new Map(), parts = [];
+  var quality = 1;          // 0.1 to 1: the share of sparks actually made. Drops when frames run slow, recovers when they're quick
   var canvas = null, ctx = null, raf = 0, last = 0, cycle = 0;
   var reduceMQ = typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion: reduce)') : null;
   var segmenter = typeof Intl !== 'undefined' && Intl.Segmenter ? new Intl.Segmenter(undefined, { granularity: 'grapheme' }) : null;
@@ -194,6 +195,7 @@
 
   function spawn(inst, x, y, ux, uy, fs, n) {
     var s = inst.opts.sparks;
+    n = Math.round(n * quality + Math.random() - 0.5);
     if (!s.enabled || n <= 0) return;
     ensureCanvas(s.zIndex);
     var cols = s.colors && s.colors.length ? s.colors : inst.opts.colors;
@@ -216,9 +218,9 @@
     if (canvas.width !== W || canvas.height !== H) { canvas.width = W; canvas.height = H; }
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, W, H);
-    if (!parts.length) return;
+    if (!parts.length) { quality = Math.min(1, quality + 0.05); return; }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    var n = 0;
+    var t0 = performance.now(), n = 0;
     for (var i = 0; i < parts.length; i++) {
       var p = parts[i], s = p.s;
       p.life += dt;
@@ -240,6 +242,10 @@
     }
     parts.length = n;
     ctx.globalAlpha = 1;
+    // speed guard: a slow frame means too many sparks for this device, so drop the oldest half and make fewer from now on
+    var took = performance.now() - t0;
+    if (took > 12) { quality = Math.max(0.1, quality * 0.6); parts.splice(0, parts.length >> 1); }
+    else if (took < 5) quality = Math.min(1, quality + 0.01);
   }
 
   /* One soft disc per colour, drawn once and reused. The canvas's own shadowBlur would do the same
@@ -380,7 +386,9 @@
     var ux = d > 1 ? dx / d : 0, uy = d > 1 ? dy / d : 0;
     for (var i = 0; i <= n; i++) {
       var k = n ? i / n : 1, x = l.x + dx * k, y = l.y + dy * k, el = document.elementFromPoint(x, y);
-      if (el && el._tt === this) this._hit(el, x, y, ux, uy, fs, this.opts.sparks.count);
+      // one pointer move never throws more than a quarter of the spark cap, however many letters it crosses
+      var per = Math.min(this.opts.sparks.count, Math.floor(this.opts.sparks.max / 4 / (n + 1)) || 1);
+      if (el && el._tt === this) this._hit(el, x, y, ux, uy, fs, per);
     }
     this._last = { x: e.clientX, y: e.clientY, t: now };
   };
