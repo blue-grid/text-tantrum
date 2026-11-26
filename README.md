@@ -23,7 +23,7 @@ Straight from the CDN, nothing to download:
 ```html
 <h1 class="tantrum">Hover over me to see the effect.</h1>
 
-<script src="https://cdn.jsdelivr.net/gh/blue-grid/text-tantrum@0.1.1/text-tantrum.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/blue-grid/text-tantrum@1.0.0/text-tantrum.min.js"></script>
 <script>
   TextTantrum('.tantrum');
 </script>
@@ -33,7 +33,7 @@ Or with no script of your own:
 
 ```html
 <h1 data-text-tantrum='{"colors":["#ff2a55","#00e5ff"]}'>Hover over me.</h1>
-<script src="https://cdn.jsdelivr.net/gh/blue-grid/text-tantrum@0.1.1/text-tantrum.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/blue-grid/text-tantrum@1.0.0/text-tantrum.min.js"></script>
 ```
 
 Or download [`text-tantrum.js`](text-tantrum.js) and host it yourself.

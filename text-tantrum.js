@@ -1,5 +1,5 @@
 /*!
- * Text Tantrum v0.1.1
+ * Text Tantrum v1.0.0
  * Letters that throw a little fit when you poke them: they turn into random signs
  * in loud colours for a moment, spit sparks, and snap back.
  * No dependencies. MIT License. Copyright (c) 2026 Omid Akbari
@@ -16,7 +16,7 @@
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
-  var VERSION = '0.1.1';
+  var VERSION = '1.0.0';
 
   /* Every option, with the values that make the original effect. Ranges are [min, max]; a random value
      between the two is picked each time. Times are in ms unless the name says otherwise. */
