@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Text Tantrum: make your letters throw a fit</title>
+<meta name="description" content="A tiny, free JavaScript effect: letters turn into random signs and colours when you poke them. Tune it here, copy the code, done.">
+<link rel="stylesheet" href="configurator/configurator.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <h1 class="logo" id="logo">Text Tantrum</h1>
+    <p class="tag">Letters that throw a fit when you poke them. Tune it, copy it, use it anywhere. Free.</p>
+  </div>
+  <nav class="top-actions">
+    <label class="preset">
+      <span>Preset</span>
+      <select id="preset"></select>
+    </label>
+    <button type="button" class="btn ghost" id="shake" title="Random settings. Your text stays.">Shake it</button>
+    <button type="button" class="btn ghost" id="reset">Reset</button>
+    <button type="button" class="btn primary" id="generate">Get the code</button>
+  </nav>
+</header>
+
+<main class="app">
+  <section class="stage" id="stage" aria-label="Preview">
+    <div class="stage-inner">
+      <div id="target" class="target"></div>
+    </div>
+    <div class="stage-bar">
+      <span class="hint" id="hint">Move your pointer over the text</span>
+      <button type="button" class="btn small" id="poke">Poke it all</button>
+    </div>
+  </section>
+
+  <aside class="panel" id="panel" aria-label="Settings"></aside>
+</main>
+
+<dialog class="modal" id="modal">
+  <form method="dialog" class="modal-head">
+    <h2>Your tantrum, to go</h2>
+    <button class="btn ghost small" value="close" aria-label="Close">Close</button>
+  </form>
+  <div class="modal-body">
+    <div class="steps">
+      <label class="field inline">
+        <span>CSS selector of your text</span>
+        <input type="text" id="selector" value=".tantrum" spellcheck="false">
+      </label>
+      <div class="tabs" role="tablist">
+        <button type="button" role="tab" class="tab on" data-tab="script" aria-selected="true">Your script</button>
+        <button type="button" role="tab" class="tab" data-tab="snippet">Snippet</button>
+        <button type="button" role="tab" class="tab" data-tab="attr">No-JS attribute</button>
+        <button type="button" role="tab" class="tab" data-tab="page">Full page</button>
+      </div>
+    </div>
+    <p class="tab-note" id="tab-note"></p>
+    <pre class="code"><code id="code"></code></pre>
+    <div class="modal-actions">
+      <button type="button" class="btn primary" id="copy">Copy</button>
+      <button type="button" class="btn" id="dl-lib">Download my text-tantrum.js</button>
+      <button type="button" class="btn" id="dl-page">Download demo page</button>
+      <button type="button" class="btn ghost" id="share">Copy link to these settings</button>
+    </div>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="text-tantrum.js"></script>
+<script src="configurator/controls.js"></script>
+<script src="configurator/presets.js"></script>
+<script src="configurator/configurator.js"></script>
+</body>
+</html>
