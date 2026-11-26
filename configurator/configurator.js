@@ -24,7 +24,9 @@
     ['Arrows', '←↑→↓↖↗↘↙'], ['Math', '∑∏∫√∞≈≠±÷×∂∆'], ['Shapes', '●○◆◇■□▲△★☆'], ['Hearts', '♥♡❤'], ['Emoji', '🔥💥✨⚡😵🤯👀']
   ];
 
-  const LOOK0 = { text: 'Say hello to your letters.\nEach one has a little mood.', font: 'helvetica', size: 72, weight: 200, spacing: -0.03, color: '#ffffff', bg: '#07080a', align: 'left' };
+  const LOOK0 = { text: 'Hover over me to see the effect.\nThen play around with the settings to explore new possibilities.', font: 'helvetica', size: 72, weight: 200, spacing: -0.03, color: '#ffffff', bg: '#07080a', align: 'left' };
+
+  const OLD_TEXTS = ['Poke me. I dare you.\nEvery letter here has feelings.', 'Say hello to your letters.\nEach one has a little mood.'];
 
   /* ---------- state ---------- */
   const fresh = () => ({ look: { ...LOOK0 }, sparkSame: false, opts: TextTantrum.merge(DEF, {}) });
@@ -370,7 +372,9 @@
       else raw = localStorage.getItem(STORE_KEY);
       if (!raw) return null;
       const s = JSON.parse(raw);
-      return { look: { ...LOOK0, ...s.look }, sparkSame: !!s.sparkSame, opts: TextTantrum.merge(DEF, s.opts) };   // fills in options added in later versions
+      const look = { ...LOOK0, ...s.look };
+      if (OLD_TEXTS.includes(look.text)) look.text = LOOK0.text;      // an earlier default, not something the visitor wrote
+      return { look, sparkSame: !!s.sparkSame, opts: TextTantrum.merge(DEF, s.opts) };   // fills in options added in later versions
     } catch (e) { return null; }
   }
 

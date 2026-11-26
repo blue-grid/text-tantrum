@@ -21,7 +21,7 @@ Open the [configurator](https://blue-grid.github.io/text-tantrum/) (or `index.ht
 Straight from the CDN, nothing to download:
 
 ```html
-<h1 class="tantrum">Say hello to your letters.</h1>
+<h1 class="tantrum">Hover over me to see the effect.</h1>
 
 <script src="https://cdn.jsdelivr.net/gh/blue-grid/text-tantrum@0.1.1/text-tantrum.min.js"></script>
 <script>
@@ -32,7 +32,7 @@ Straight from the CDN, nothing to download:
 Or with no script of your own:
 
 ```html
-<h1 data-text-tantrum='{"colors":["#ff2a55","#00e5ff"]}'>Say hello.</h1>
+<h1 data-text-tantrum='{"colors":["#ff2a55","#00e5ff"]}'>Hover over me.</h1>
 <script src="https://cdn.jsdelivr.net/gh/blue-grid/text-tantrum@0.1.1/text-tantrum.min.js"></script>
 ```
 
