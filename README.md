@@ -8,18 +8,22 @@ Letters that throw a little fit when you poke them. Move the pointer over the te
 - Screen readers still read the real text
 - Stays still for people who ask their system for less motion
 
+**[Try it and make your own →](https://blue-grid.github.io/text-tantrum/)**
+
 ## Make your own
 
-Open `index.html` in a browser. Pick colours, signs, sparks and timing, then press **Get the code**.
+Open the [configurator](https://blue-grid.github.io/text-tantrum/) (or `index.html` from this repo). Pick colours, signs, sparks and timing, then press **Get the code**.
 
 **Your script** gives you the whole effect as one file with your settings written into it. Every setting has a comment next to it, so you can keep changing it by hand later. Its last lines start it on your text: change the selector there to match your page.
 
 ## Use it
 
+Straight from the CDN, nothing to download:
+
 ```html
 <h1 class="tantrum">Poke me. I dare you.</h1>
 
-<script src="text-tantrum.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/blue-grid/text-tantrum@0.1.0/text-tantrum.min.js"></script>
 <script>
   TextTantrum('.tantrum');
 </script>
@@ -29,8 +33,10 @@ Or with no script of your own:
 
 ```html
 <h1 data-text-tantrum='{"colors":["#ff2a55","#00e5ff"]}'>Poke me.</h1>
-<script src="text-tantrum.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/blue-grid/text-tantrum@0.1.0/text-tantrum.min.js"></script>
 ```
+
+Or download [`text-tantrum.js`](text-tantrum.js) and host it yourself.
 
 ## Options
 

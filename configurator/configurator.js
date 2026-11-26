@@ -5,7 +5,7 @@
 
   const { h, builders, randomColor, snap } = UI;
   const DEF = TextTantrum.defaults;
-  const SCRIPT_SRC = 'text-tantrum.js';        // becomes the CDN address once the repo is public
+  const SCRIPT_SRC = 'https://cdn.jsdelivr.net/gh/blue-grid/text-tantrum@0.1.0/text-tantrum.min.js';   // bump the version with each release
   const STORE_KEY = 'text-tantrum-config-v1';
 
   const FONTS = {
